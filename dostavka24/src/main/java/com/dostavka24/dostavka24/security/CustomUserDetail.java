@@ -31,6 +31,7 @@ public class CustomUserDetail implements UserDetailsService {
                 .orElseThrow(() -> new UserNotActiveException("User" + username + " does not exsists in database"));
     }
 
+
     private User createSpringSecurityUser(String username, com.dostavka24.dostavka24.domain.entities.users.User user){
         if(user.isActive()){
             throw new UserNotActiveException("User" + username + " is not active");

@@ -3,7 +3,6 @@ package com.dostavka24.dostavka24.rest;
 import com.dostavka24.dostavka24.rest.vm.LoginVM;
 import com.dostavka24.dostavka24.security.TokenProvider;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.security.auth.UserPrincipal;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
