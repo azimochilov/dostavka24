@@ -1,8 +1,9 @@
 package com.dostavka24.dostavka24.security;
 
 import com.dostavka24.dostavka24.domain.entities.users.Role;
-import com.dostavka24.dostavka24.repository.UserRepository;
 
+
+import com.dostavka24.dostavka24.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +27,7 @@ public class CustomUserDetail implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String lowerCase = username.toLowerCase();
-        return userRepository.findByUserName(lowerCase)
+        return userRepository.getUserByUserName(lowerCase)
                 .map(user -> createSpringSecurityUser(lowerCase, user))
                 .orElseThrow(() -> new UserNotActiveException("User" + username + " does not exsists in database"));
     }
