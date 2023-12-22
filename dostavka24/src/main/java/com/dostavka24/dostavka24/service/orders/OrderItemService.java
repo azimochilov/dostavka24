@@ -1,8 +1,14 @@
 package com.dostavka24.dostavka24.service.orders;
 
+import com.dostavka24.dostavka24.domain.dtos.orders.orderitem.OrderItemCreationDto;
+import com.dostavka24.dostavka24.domain.entities.orders.Order;
+import com.dostavka24.dostavka24.domain.entities.orders.OrderItem;
+import com.dostavka24.dostavka24.domain.entities.restaurants.Product;
+import com.dostavka24.dostavka24.exception.NotFoundException;
 import com.dostavka24.dostavka24.repository.OrderItemRepository;
 import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.repository.ProductRepository;
+import com.dostavka24.dostavka24.security.CustomUserDetail;
 import com.dostavka24.dostavka24.service.users.UserService;
 import org.springframework.stereotype.Service;
 
@@ -18,61 +24,41 @@ public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
-    private final UserService userService;
 
-    public OrderItemService(OrderItemRepository orderItemRepository, ProductRepository productRepository, OrderRepository orderRepository, UserService userService) {
+    private final CustomUserDetail customUserDetail;
+
+    public OrderItemService(OrderItemRepository orderItemRepository, ProductRepository productRepository, OrderRepository orderRepository, CustomUserDetail customUserDetail) {
         this.orderItemRepository = orderItemRepository;
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
-        this.userService = userService;
+        this.customUserDetail = customUserDetail;
     }
 
-    public OrderItem createOrderItem(Product product){
-        String currentUser = SecurityUtils.getUserName();
-        Long currentId = userService.getId(currentUser);
+    public OrderItem createOrderItem(OrderItemCreationDto orderItemDto){
+        Long currentId = customUserDetail.getCurrentUserId();
         Order userOrder = orderRepository.getByUserId(currentId);
 
-        Menu menu = menuRepository.findByName(product.getName());
-        if(menu == null){
+        Product product = productRepository.findByName(orderItemDto.getName());
+        if(product == null){
             throw new NotFoundException("Product for given name not found!");
         }
         OrderItem orderItem = new OrderItem();
         orderItem.setOrder(userOrder);
-        orderItem.setCreatedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-        orderItem.setCount(product.getCount());
-        orderItem.setName(product.getName());
-        orderItem.setCreatedAt(Date.from(Instant.now()));
-        orderItem.setMenu(menu);
-        Double total = (menu.getPrice()* product.getCount());
+        orderItem.setCreatedAt(Instant.now());
+        orderItem.setCount(orderItemDto.getCount());
+        orderItem.setName(orderItemDto.getName());
+        orderItem.setCreatedAt(Instant.now());
+        orderItem.setProduct(product);
+        Double total = (double) (product.getPrice()* orderItemDto.getCount());
         if(userOrder.getTotalPrice() == null){
             userOrder.setTotalPrice(total);
-            userOrder.setAmountOfProducts(product.getCount());
+            userOrder.setAmountOfProducts(orderItemDto.getCount());
         }else {
             userOrder.setTotalPrice(userOrder.getTotalPrice() + total);
-            userOrder.setAmountOfProducts(userOrder.getAmountOfProducts()+product.getCount());
+            userOrder.setAmountOfProducts(userOrder.getAmountOfProducts()+orderItemDto.getCount());
         }
         orderRepository.save(userOrder);
         return orderItemRepository.save(orderItem);
-    }
-
-    public Integer getProductsByOrderId(Long orderId){
-        List<OrderItem> relatedItems = new ArrayList<>();
-
-        for(OrderItem orderItem : orderItemRepository.findAll()){
-            if(orderItem.getOrder().getId() == orderId){
-                relatedItems.add(orderItem);
-            }
-        }
-
-        return getCountOfProducts(relatedItems);
-    }
-
-    public Integer getCountOfProducts(List<OrderItem> orderItems){
-        Integer count = 0;
-        for(OrderItem orderItem : orderItems){
-            count += orderItem.getCount();
-        }
-        return count;
     }
 
 }
