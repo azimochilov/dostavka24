@@ -1,10 +1,10 @@
-package com.dostavka24.dostavka24.domain.dtos;
+package com.dostavka24.dostavka24.domain.dtos.users;
 
 import com.dostavka24.dostavka24.domain.entities.users.Role;
 
 import java.util.List;
 
-public class UserUpdateDto {
+public class UserCreationDto {
     private String userName;
     private String password;
     private String firstName;

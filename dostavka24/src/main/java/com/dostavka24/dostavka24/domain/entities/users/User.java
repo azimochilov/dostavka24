@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +21,9 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private Date updatedAt;
+    private Instant updatedAt;
     private boolean isActive = false;
-    private Date registeredAt;
+    private Instant registeredAt;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -79,19 +80,19 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Date getUpdatedAt() {
+    public Instant getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Date getRegisteredAt() {
+    public Instant getRegisteredAt() {
         return registeredAt;
     }
 
-    public void setRegisteredAt(Date registeredAt) {
+    public void setRegisteredAt(Instant registeredAt) {
         this.registeredAt = registeredAt;
     }
 

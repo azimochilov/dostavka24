@@ -1,4 +1,4 @@
-package com.dostavka24.dostavka24.domain.dtos;
+package com.dostavka24.dostavka24.domain.dtos.users;
 
 import com.dostavka24.dostavka24.domain.entities.users.Role;
 

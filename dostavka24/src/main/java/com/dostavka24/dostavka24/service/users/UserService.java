@@ -1,6 +1,8 @@
 package com.dostavka24.dostavka24.service.users;
 
 
+import com.dostavka24.dostavka24.domain.dtos.users.UserCreationDto;
+import com.dostavka24.dostavka24.domain.dtos.users.UserUpdateDto;
 import com.dostavka24.dostavka24.domain.entities.orders.Order;
 import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.exception.NotFoundException;
@@ -10,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,32 +26,42 @@ public class UserService {
         this.orderRepository = orderRepository;
     }
 
-    public User create(User user){
+    public User create(UserCreationDto user){
         Order order = new Order();
-        order.setUser(user);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRegisteredAt(Date.from(Instant.now()));
-
-        userRepository.save(user);
+        User regUser =  new User();
+        regUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        regUser.setEmail(user.getEmail());
+        regUser.setUserName(user.getUserName());
+        regUser.setFirstName(user.getFirstName());
+        regUser.setLastName(user.getLastName());
+        regUser.setRoles(user.getRoles());
+        regUser.setRegisteredAt(Instant.now());
+        userRepository.save(regUser);
+        order.setUser(regUser);
         orderRepository.save(order);
-
-        return user;
+        return regUser;
     }
 
-    public void delete(User user){
+    public void delete(Long id){
+
+        User user = userRepository.getById(id);
+        if(user == null){
+            throw new NotFoundException("User with given id not found!");
+        }
 
         userRepository.delete(user);
     }
 
-    public User update(String userName, User updatedUserData) {
-        User existingUser = userRepository.findByUserName(userName);
+    public User update(Long id, UserUpdateDto updatedUserData) {
+        User existingUser = userRepository.getById(id);
         if (existingUser == null) {
-            throw new NotFoundException("User not found with username: " + userName);
+            throw new NotFoundException("User not found with given id " );
         }
 
         existingUser.setUserName(updatedUserData.getUserName());
         existingUser.setPassword(updatedUserData.getPassword());
+        existingUser.setEmail(updatedUserData.getEmail());
         existingUser.setFirstName(updatedUserData.getFirstName());
         existingUser.setLastName(updatedUserData.getLastName());
         existingUser.setRoles(updatedUserData.getRoles());
@@ -72,7 +83,7 @@ public class UserService {
         return existingUser;
     }
 
-    public Long getId(String username){
+    public Long getIdOfUser(String username){
         User existingUser = userRepository.findByUserName(username);
         if (existingUser == null) {
             throw new NotFoundException("User not found with this id");

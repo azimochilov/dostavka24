@@ -6,6 +6,7 @@ import com.dostavka24.dostavka24.domain.entities.users.Role;
 import com.dostavka24.dostavka24.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,4 +47,14 @@ public class CustomUserDetail implements UserDetailsService {
 
     }
 
+    public static String getUserName() {
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        }
+        throw new RuntimeException();
+    }
+    public Long getCurrentUserId(){
+        return userRepository.findByUserName(getUserName()).getId();
+    }
 }
