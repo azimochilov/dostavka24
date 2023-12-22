@@ -16,4 +16,9 @@ public class DeliveryCalService {
         String devTime = String.valueOf(estimatedDeliveryTime.getHour()+ estimatedDeliveryTime.getMinute()+"minutes");
         return devTime;
     }
+
+    public  Double calculationOfTotalPriceOfProduct(Integer getPriceOfProduct,Integer getCountOfProduct ){
+        Double total = (double) (getPriceOfProduct * getCountOfProduct);
+        return total;
+    }
 }
