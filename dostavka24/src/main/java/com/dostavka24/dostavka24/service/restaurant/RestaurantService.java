@@ -40,8 +40,8 @@ public class RestaurantService {
         restaurantRepository.delete(restaurantForDeletion);
     }
 
-    public Restaurant update(String name, RestaurantUpdateDto updtRestaurant) {
-        Restaurant existingRestaurant = restaurantRepository.findByName(name);
+    public Restaurant update(Long id, RestaurantUpdateDto updtRestaurant) {
+        Restaurant existingRestaurant = restaurantRepository.findById(id).get();
 
         if (existingRestaurant == null) {
             throw new NotFoundException("Restaurant not found");

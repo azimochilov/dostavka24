@@ -37,9 +37,9 @@ public class AddressService {
         addressRepository.delete(addressForDeletion);
     }
 
-    public Address update(String street, AddressUpdateDto updtAddress) {
+    public Address update(Long id, AddressUpdateDto updtAddress) {
 
-        Address existingAddress = addressRepository.findByStreet(street);
+        Address existingAddress = addressRepository.findById(id).get();
         if (existingAddress == null) {
             throw new NotFoundException("Address not found");
         }

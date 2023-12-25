@@ -42,8 +42,8 @@ public class ProductService {
         productRepository.delete(productForDeletion);
     }
 
-    public Product update(String name, ProductUpdateDto updtProduct) {
-        Product existingProduct = productRepository.findByName(name);
+    public Product update(Long id, ProductUpdateDto updtProduct) {
+        Product existingProduct = productRepository.findById(id).get();
 
         if (existingProduct == null) {
             throw new NotFoundException("Product not found");
