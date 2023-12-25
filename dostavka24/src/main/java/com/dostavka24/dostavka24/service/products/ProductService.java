@@ -70,7 +70,7 @@ public class ProductService {
         if (existingProduct == null) {
             throw new NotFoundException("Product not found with this id");
         }
-        return productRepository.findById(id).get();
+        return existingProduct;
     }
 
 }
