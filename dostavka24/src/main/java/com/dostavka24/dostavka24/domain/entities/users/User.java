@@ -1,5 +1,6 @@
 package com.dostavka24.dostavka24.domain.entities.users;
 
+import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.users.Role;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
@@ -31,6 +32,17 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "role_name",referencedColumnName = "name")}
     )
     private List<Role> roles;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public boolean isActive() {
         return isActive;

@@ -1,4 +1,4 @@
-package com.dostavka24.dostavka24.rest;
+package com.dostavka24.dostavka24.rest.users;
 
 import com.dostavka24.dostavka24.rest.vm.LoginVM;
 import com.dostavka24.dostavka24.security.TokenProvider;
