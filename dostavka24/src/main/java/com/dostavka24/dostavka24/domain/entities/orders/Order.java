@@ -1,5 +1,6 @@
 package com.dostavka24.dostavka24.domain.entities.orders;
 
+import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.domain.enums.OrderStatus;
 import jakarta.persistence.*;
@@ -21,13 +22,22 @@ public class Order implements Serializable {
     private Instant createdAt;
     private Instant updatedAt;
     private Boolean isCart = true;
-    private String yourAdress;
-    private Float distance;
     private String phone;
     private Double totalPrice;
     private OrderStatus status;
     private Integer amountOfProducts;
     private String deliveryTime;
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Long getId() {
         return id;
@@ -67,22 +77,6 @@ public class Order implements Serializable {
 
     public void setCart(Boolean cart) {
         isCart = cart;
-    }
-
-    public String getYourAdress() {
-        return yourAdress;
-    }
-
-    public void setYourAdress(String yourAdress) {
-        this.yourAdress = yourAdress;
-    }
-
-    public Float getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Float distance) {
-        this.distance = distance;
     }
 
     public String getPhone() {

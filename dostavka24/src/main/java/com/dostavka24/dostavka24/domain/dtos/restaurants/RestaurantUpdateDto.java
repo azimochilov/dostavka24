@@ -1,11 +1,18 @@
-package com.dostavka24.dostavka24.domain.dtos.orders;
+package com.dostavka24.dostavka24.domain.dtos.restaurants;
 
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 
-public class OrderCreationDto {
-
+public class RestaurantUpdateDto {
+    private String name;
     private Address address;
-    private String phone;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Address getAddress() {
         return address;
@@ -13,12 +20,5 @@ public class OrderCreationDto {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 }
