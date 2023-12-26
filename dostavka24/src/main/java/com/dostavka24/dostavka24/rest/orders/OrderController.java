@@ -48,7 +48,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getAllOrder());
     }
 
-    @GetMapping
+    @GetMapping("/{status}")
     public ResponseEntity<?> getAllByStatus(@RequestParam(name = "status", required = false) Boolean isActive) {
         if (isActive == null) {
             return ResponseEntity.ok(orderService.getAllOrder());

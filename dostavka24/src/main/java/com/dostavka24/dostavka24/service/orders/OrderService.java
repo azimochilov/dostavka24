@@ -32,8 +32,7 @@ public class OrderService {
         Long currentUserId = customUserDetail.getCurrentUserId();
 
         Order userOrder = orderRepository.getByUserId(currentUserId);
-        userOrder.setDistance(orderDto.getDistance());
-        userOrder.setYourAdress(orderDto.getYourAdress());
+        userOrder.setAddress(orderDto.getAddress());
         userOrder.setCreatedAt(Instant.now());
         userOrder.setPhone(orderDto.getPhone());
         userOrder.setAmountOfProducts(orderDetailsProcessor.getProductsByOrderId(userOrder.getId()));

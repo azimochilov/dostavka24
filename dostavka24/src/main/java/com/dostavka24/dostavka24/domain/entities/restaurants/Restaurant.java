@@ -20,9 +20,8 @@ public class Restaurant implements Serializable {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant")
     private List<Order> orders;
-
     public Long getId() {
         return id;
     }

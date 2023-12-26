@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="dostavka24.dostavka24.main" target="17" />
-      <module name="dostavka24.dostavka24.test" target="17" />
+      <module name="dostavka24.dostavka24.main~1" target="17" />
+      <module name="dostavka24.dostavka24.test~1" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

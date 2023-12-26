@@ -2,10 +2,7 @@ package com.dostavka24.dostavka24.rest.addresses;
 
 import com.dostavka24.dostavka24.domain.dtos.addresses.AddressCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.addresses.AddressUpdateDto;
-import com.dostavka24.dostavka24.domain.dtos.restaurants.RestaurantCreationDto;
-import com.dostavka24.dostavka24.domain.dtos.restaurants.RestaurantUpdateDto;
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
-import com.dostavka24.dostavka24.domain.entities.restaurants.Restaurant;
 import com.dostavka24.dostavka24.service.addresses.AddressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +46,4 @@ public class AddressController {
         Address updatedAddress = addressService.update(id,addressUpdateDto);
         return ResponseEntity.ok(updatedAddress);
     }
-
 }

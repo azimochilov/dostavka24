@@ -27,6 +27,7 @@ public class UserService {
     }
 
     public User create(UserCreationDto user){
+
         Order order = new Order();
 
         User regUser =  new User();
@@ -37,9 +38,13 @@ public class UserService {
         regUser.setLastName(user.getLastName());
         regUser.setRoles(user.getRoles());
         regUser.setRegisteredAt(Instant.now());
+        regUser.setAddress(user.getAdress());
+
         userRepository.save(regUser);
+
         order.setUser(regUser);
         orderRepository.save(order);
+
         return regUser;
     }
 
@@ -61,11 +66,11 @@ public class UserService {
 
         existingUser.setUserName(updatedUserData.getUserName());
         existingUser.setPassword(updatedUserData.getPassword());
+        existingUser.setAddress(updatedUserData.getAddress());
         existingUser.setEmail(updatedUserData.getEmail());
         existingUser.setFirstName(updatedUserData.getFirstName());
         existingUser.setLastName(updatedUserData.getLastName());
         existingUser.setRoles(updatedUserData.getRoles());
-
         return userRepository.save(existingUser);
     }
 

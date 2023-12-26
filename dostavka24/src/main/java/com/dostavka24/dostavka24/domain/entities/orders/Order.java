@@ -1,6 +1,7 @@
 package com.dostavka24.dostavka24.domain.entities.orders;
 
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
+import com.dostavka24.dostavka24.domain.entities.restaurants.Restaurant;
 import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.domain.enums.OrderStatus;
 import jakarta.persistence.*;
@@ -30,6 +31,9 @@ public class Order implements Serializable {
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
     public Address getAddress() {
         return address;
