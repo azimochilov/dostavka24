@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "dostavka24_user")
+@Table(name = "dastavka24_user")
 public class User implements Serializable {
     @jakarta.persistence.Id
     @Id

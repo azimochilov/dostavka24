@@ -2,12 +2,12 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/dostavka24
+    url: jdbc:postgresql://localhost:5432/dastavka24
     username: postgres
     password: Yaironman@.26
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -17,4 +17,6 @@ spring:
     swagger-ui:
       path: /swagger-ui.html
       enabled: true
+  flyway:
+    enabled: true
 
