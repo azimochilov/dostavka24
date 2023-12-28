@@ -77,16 +77,21 @@ public class RestaurantService {
     public Restaurant findNearestRestaurant() {
 
         Long currentUserId = customUserDetail.getCurrentUserId();
-        User user = userService.getById(currentUserId);
-        double userLat = user.getAddress().getLatitude();
-        double userLng = user.getAddress().getLongitude();
+        Order order = orderRepository.getOrderByUserId(currentUserId);
+
+        double userLat = order.getAddress().getLatitude();
+        double userLng = order.getAddress().getLongitude();
 
         Restaurant nearestRestaurant = null;
         double minDistance = Double.MAX_VALUE;
 
         List<Restaurant> restaurants = restaurantRepository.findAll();
         for (Restaurant restaurant : restaurants) {
-            double distance = distanceCalService.calculateDistance(userLat, userLng, restaurant.getAddress().getLatitude(), restaurant.getAddress().getLongitude());
+
+            double distance = distanceCalService.calculateDistance(userLat,
+                    userLng,
+                    restaurant.getAddress().getLatitude(),
+                    restaurant.getAddress().getLongitude());
 
             if (distance < minDistance) {
                 minDistance = distance;
@@ -94,7 +99,7 @@ public class RestaurantService {
             }
         }
 
-        Order order = orderRepository.getOrderByUserId(currentUserId);
+
         nearestRestaurant.getOrders().add(order);
 
         restaurantRepository.save(nearestRestaurant);
