@@ -1,25 +1,33 @@
 package com.dostavka24.dostavka24.service.restaurant;
 
-import com.dostavka24.dostavka24.domain.dtos.products.ProductCreationDto;
-import com.dostavka24.dostavka24.domain.dtos.products.ProductUpdateDto;
 import com.dostavka24.dostavka24.domain.dtos.restaurants.RestaurantCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.restaurants.RestaurantUpdateDto;
-import com.dostavka24.dostavka24.domain.entities.restaurants.Product;
+import com.dostavka24.dostavka24.domain.entities.orders.Order;
 import com.dostavka24.dostavka24.domain.entities.restaurants.Restaurant;
-import com.dostavka24.dostavka24.domain.enums.ProductStatus;
+import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.exception.NotFoundException;
+import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.repository.RestaurantRepository;
+import com.dostavka24.dostavka24.security.CustomUserDetail;
+import com.dostavka24.dostavka24.service.commons.DistanceCalService;
+import com.dostavka24.dostavka24.service.users.UserService;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 
 @Service
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
-
-    public RestaurantService(RestaurantRepository restaurantRepository) {
+    private final DistanceCalService distanceCalService;
+    private final CustomUserDetail customUserDetail;
+    private final UserService userService;
+    private final OrderRepository orderRepository;
+    public RestaurantService(RestaurantRepository restaurantRepository, DistanceCalService distanceCalService, CustomUserDetail customUserDetail, UserService userService, OrderRepository orderRepository) {
         this.restaurantRepository = restaurantRepository;
+        this.distanceCalService = distanceCalService;
+        this.customUserDetail = customUserDetail;
+        this.userService = userService;
+        this.orderRepository = orderRepository;
     }
 
     public Restaurant create(RestaurantCreationDto restaurantCreationDto) {
@@ -66,4 +74,31 @@ public class RestaurantService {
         return existingRestaurant;
     }
 
+    public Restaurant findNearestRestaurant() {
+
+        Long currentUserId = customUserDetail.getCurrentUserId();
+        User user = userService.getById(currentUserId);
+        double userLat = user.getAddress().getLatitude();
+        double userLng = user.getAddress().getLongitude();
+
+        Restaurant nearestRestaurant = null;
+        double minDistance = Double.MAX_VALUE;
+
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        for (Restaurant restaurant : restaurants) {
+            double distance = distanceCalService.calculateDistance(userLat, userLng, restaurant.getAddress().getLatitude(), restaurant.getAddress().getLongitude());
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestRestaurant = restaurant;
+            }
+        }
+
+        Order order = orderRepository.getOrderByUserId(currentUserId);
+        nearestRestaurant.getOrders().add(order);
+
+        restaurantRepository.save(nearestRestaurant);
+
+        return nearestRestaurant;
+    }
 }

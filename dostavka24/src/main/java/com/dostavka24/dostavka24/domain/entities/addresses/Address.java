@@ -15,18 +15,6 @@ public class Address implements Serializable {
     private String city;
     private Double longitude;
     private Double latitude;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Long getId() {
         return id;
     }
