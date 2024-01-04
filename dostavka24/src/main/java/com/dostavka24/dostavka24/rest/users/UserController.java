@@ -1,5 +1,6 @@
 package com.dostavka24.dostavka24.rest.users;
 import com.dostavka24.dostavka24.domain.dtos.users.UserCreationDto;
+import com.dostavka24.dostavka24.domain.dtos.users.VerifyDto;
 import com.dostavka24.dostavka24.service.users.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,13 @@ public class UserController {
     private Boolean checkPasswordLength(String password){
 
         return (password.length()>4);
+    }
+    @PostMapping("/{id}/verify")
+    public ResponseEntity<?> verifyUser(@PathVariable Long id, @RequestBody VerifyDto verifyDto){
+        boolean verification = userService.verification(id, verifyDto.getCode());
+        if (verification) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 }

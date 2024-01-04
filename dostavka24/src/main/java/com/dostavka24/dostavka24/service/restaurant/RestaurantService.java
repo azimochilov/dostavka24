@@ -98,7 +98,6 @@ public class RestaurantService {
                 nearestRestaurant = restaurant;
             }
         }
-        //2024....
 
         nearestRestaurant.getOrders().add(order);
 

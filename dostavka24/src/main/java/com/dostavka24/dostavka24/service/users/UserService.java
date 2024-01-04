@@ -8,6 +8,8 @@ import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.exception.NotFoundException;
 import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.repository.UserRepository;
+import com.dostavka24.dostavka24.service.email.EmailService;
+import com.dostavka24.dostavka24.service.email.EmailVerificationService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,15 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final OrderRepository orderRepository;
+    private final EmailService emailService;
+    private final EmailVerificationService emailVerificationService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, OrderRepository orderRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, OrderRepository orderRepository, EmailService emailService, EmailVerificationService emailVerificationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.orderRepository = orderRepository;
+        this.emailService = emailService;
+        this.emailVerificationService = emailVerificationService;
     }
 
     public User create(UserCreationDto user){
@@ -44,7 +50,7 @@ public class UserService {
 
         order.setUser(regUser);
         orderRepository.save(order);
-
+        emailService.sendSimpleMessage(user.getUserName(), "Verify Code", emailVerificationService.generateCode());
         return regUser;
     }
 
@@ -97,6 +103,27 @@ public class UserService {
     }
 
     public Boolean checkUserName(String userName){
+
         return userRepository.existsByUserName(userName);
     }
+
+    public boolean verification(Long id, String code) {
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(
+                String.format("User with id %s not found", id)
+        ));
+        if (user.isActive()) {
+            return false;
+        }
+        Instant now = Instant.now();
+        if (!now.isBefore(emailVerificationService.getExpiredDate())) {
+            return false;
+        }
+        if (!code.equals(emailVerificationService.getVerifyCode())) {
+            return false;
+        }
+        user.setActive(true);
+        userRepository.save(user);
+        return true;
+    }
+
 }
