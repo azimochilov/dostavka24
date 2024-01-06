@@ -1,11 +1,17 @@
 package com.dostavka24.dostavka24.domain.entities.users;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Privilege {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
