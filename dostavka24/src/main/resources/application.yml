@@ -31,3 +31,6 @@ spring:
           starttls:
             enable: true
 
+security:
+  jwt:
+    secret-key: "secret"

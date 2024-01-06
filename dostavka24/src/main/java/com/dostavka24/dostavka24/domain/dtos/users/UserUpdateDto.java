@@ -12,7 +12,7 @@ public class UserUpdateDto {
     private String lastName;
     private String email;
     private Address address;
-    private List<Role> roles;
+    private Role role;
 
     public Address getAddress() {
         return address;
@@ -62,11 +62,11 @@ public class UserUpdateDto {
         this.email = email;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

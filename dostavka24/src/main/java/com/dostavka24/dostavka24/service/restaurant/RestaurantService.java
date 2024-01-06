@@ -8,9 +8,9 @@ import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.exception.NotFoundException;
 import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.repository.RestaurantRepository;
-import com.dostavka24.dostavka24.security.CustomUserDetail;
 import com.dostavka24.dostavka24.service.commons.DistanceCalService;
 import com.dostavka24.dostavka24.service.users.UserService;
+import com.dostavka24.dostavka24.service.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +19,11 @@ import java.util.List;
 public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final DistanceCalService distanceCalService;
-    private final CustomUserDetail customUserDetail;
     private final UserService userService;
     private final OrderRepository orderRepository;
-    public RestaurantService(RestaurantRepository restaurantRepository, DistanceCalService distanceCalService, CustomUserDetail customUserDetail, UserService userService, OrderRepository orderRepository) {
+    public RestaurantService(RestaurantRepository restaurantRepository, DistanceCalService distanceCalService, UserService userService, OrderRepository orderRepository) {
         this.restaurantRepository = restaurantRepository;
         this.distanceCalService = distanceCalService;
-        this.customUserDetail = customUserDetail;
         this.userService = userService;
         this.orderRepository = orderRepository;
     }
@@ -76,7 +74,7 @@ public class RestaurantService {
 
     public Restaurant findNearestRestaurant() {
 
-        Long currentUserId = customUserDetail.getCurrentUserId();
+        Long currentUserId = SecurityUtils.getCurrentUserId();
         Order order = orderRepository.getOrderByUserId(currentUserId);
 
         double userLat = order.getAddress().getLatitude();

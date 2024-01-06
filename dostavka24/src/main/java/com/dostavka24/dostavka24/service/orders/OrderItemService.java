@@ -8,8 +8,8 @@ import com.dostavka24.dostavka24.exception.NotFoundException;
 import com.dostavka24.dostavka24.repository.OrderItemRepository;
 import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.repository.ProductRepository;
-import com.dostavka24.dostavka24.security.CustomUserDetail;
 import com.dostavka24.dostavka24.service.commons.DeliveryCalService;
+import com.dostavka24.dostavka24.service.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -20,19 +20,19 @@ public class OrderItemService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final DeliveryCalService deliveryCalService;
-    private final CustomUserDetail customUserDetail;
 
-    public OrderItemService(OrderItemRepository orderItemRepository, ProductRepository productRepository, OrderRepository orderRepository, DeliveryCalService deliveryCalService, CustomUserDetail customUserDetail) {
+
+    public OrderItemService(OrderItemRepository orderItemRepository, ProductRepository productRepository, OrderRepository orderRepository, DeliveryCalService deliveryCalService) {
         this.orderItemRepository = orderItemRepository;
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
         this.deliveryCalService = deliveryCalService;
-        this.customUserDetail = customUserDetail;
+
     }
 
     public OrderItem createOrderItem(OrderItemCreationDto orderItemDto){
 
-        Long currentId = customUserDetail.getCurrentUserId();
+        Long currentId = SecurityUtils.getCurrentUserId();
         Order userOrder = orderRepository.getByUserId(currentId);
 
         Product product = productRepository.findByName(orderItemDto.getName());

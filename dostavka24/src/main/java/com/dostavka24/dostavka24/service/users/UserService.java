@@ -42,7 +42,7 @@ public class UserService {
         regUser.setUserName(user.getUserName());
         regUser.setFirstName(user.getFirstName());
         regUser.setLastName(user.getLastName());
-        regUser.setRoles(user.getRoles());
+        regUser.setRole(user.getRole());
         regUser.setRegisteredAt(Instant.now());
         regUser.setAddress(user.getAdress());
 
@@ -76,7 +76,7 @@ public class UserService {
         existingUser.setEmail(updatedUserData.getEmail());
         existingUser.setFirstName(updatedUserData.getFirstName());
         existingUser.setLastName(updatedUserData.getLastName());
-        existingUser.setRoles(updatedUserData.getRoles());
+        existingUser.setRole(updatedUserData.getRole());
         return userRepository.save(existingUser);
     }
 

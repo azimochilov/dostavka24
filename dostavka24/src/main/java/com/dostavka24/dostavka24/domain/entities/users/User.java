@@ -3,7 +3,6 @@ package com.dostavka24.dostavka24.domain.entities.users;
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.users.Role;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,8 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "dastavka24_user")
-public class User implements Serializable {
-    @jakarta.persistence.Id
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,16 +23,20 @@ public class User implements Serializable {
     private Instant updatedAt;
     private boolean isActive = false;
     private Instant registeredAt;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_name",referencedColumnName = "name")}
-    )
-    private List<Role> roles;
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private Role role;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public Address getAddress() {
         return address;
@@ -106,14 +108,6 @@ public class User implements Serializable {
 
     public void setRegisteredAt(Instant registeredAt) {
         this.registeredAt = registeredAt;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 
     public void setId(Long id) {

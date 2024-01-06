@@ -3,9 +3,10 @@ package com.dostavka24.dostavka24.service.orders;
 import com.dostavka24.dostavka24.domain.dtos.orders.OrderCreationDto;
 import com.dostavka24.dostavka24.domain.entities.orders.Order;
 import com.dostavka24.dostavka24.repository.OrderRepository;
-import com.dostavka24.dostavka24.security.CustomUserDetail;
+import com.dostavka24.dostavka24.security.CustomUserDetailService;
 import com.dostavka24.dostavka24.service.commons.DeliveryCalService;
 import com.dostavka24.dostavka24.service.commons.OrderDetailsProcessor;
+import com.dostavka24.dostavka24.service.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -17,10 +18,10 @@ import java.util.List;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemService orderItemService;
-    private final CustomUserDetail customUserDetail;
+    private final CustomUserDetailService customUserDetail;
     private final DeliveryCalService deliveryCalService;
     private final OrderDetailsProcessor orderDetailsProcessor;
-    public OrderService(OrderRepository orderRepository, OrderItemService orderItemService, CustomUserDetail customUserDetail, DeliveryCalService deliveryCalService, OrderDetailsProcessor orderDetailsProcessor) {
+    public OrderService(OrderRepository orderRepository, OrderItemService orderItemService, CustomUserDetailService customUserDetail, DeliveryCalService deliveryCalService, OrderDetailsProcessor orderDetailsProcessor) {
         this.orderRepository = orderRepository;
         this.orderItemService = orderItemService;
         this.customUserDetail = customUserDetail;
@@ -29,7 +30,7 @@ public class OrderService {
     }
 
     public Order craeteOrder(OrderCreationDto orderDto){
-        Long currentUserId = customUserDetail.getCurrentUserId();
+        Long currentUserId = SecurityUtils.getCurrentUserId();
 
         Order userOrder = orderRepository.getByUserId(currentUserId);
         userOrder.setAddress(orderDto.getAddress());
