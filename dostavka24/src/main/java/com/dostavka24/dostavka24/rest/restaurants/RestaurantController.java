@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/restaurant")
 public class RestaurantController {
     private final RestaurantService restaurantService;
 
@@ -21,30 +21,30 @@ public class RestaurantController {
         this.restaurantService = restaurantService;
     }
 
-    @PostMapping("/restaurant")
+    @PostMapping
     public ResponseEntity create(@RequestBody RestaurantCreationDto restaurantCreationDto){
         restaurantService.create(restaurantCreationDto);
         return ResponseEntity.ok(restaurantCreationDto);
     }
 
-    @DeleteMapping("/restaurant/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@RequestBody Long id){
         restaurantService.delete(id);
         return ResponseEntity.ok("deleted");
     }
 
-    @GetMapping("/restaurants")
+    @GetMapping
     public ResponseEntity getAll(){
         List<Restaurant> restaurants = restaurantService.getAll();
         return ResponseEntity.ok(restaurants);
     }
 
-    @GetMapping("/restaurants/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getById(@RequestBody Long id){
         return ResponseEntity.ok(restaurantService.getById(id));
     }
 
-    @PutMapping("/restaurants/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id,@RequestBody RestaurantUpdateDto restaurantUpdateDto){
         Restaurant updatedRestaurant = restaurantService.update(id,restaurantUpdateDto);
         return ResponseEntity.ok(updatedRestaurant);

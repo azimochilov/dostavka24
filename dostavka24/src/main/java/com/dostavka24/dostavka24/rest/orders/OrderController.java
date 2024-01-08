@@ -5,10 +5,11 @@ import com.dostavka24.dostavka24.domain.dtos.orders.OrderCreationDto;
 import com.dostavka24.dostavka24.service.orders.OrderManagingService;
 import com.dostavka24.dostavka24.service.orders.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -20,19 +21,19 @@ public class OrderController {
     }
 
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity createOrder(@RequestBody OrderCreationDto orderCreationDto) {
         return ResponseEntity.ok(orderService.craeteOrder(orderCreationDto));
     }
 
-    @PatchMapping("/status/reject")
-    public ResponseEntity changeStatusToReject(@RequestBody Long orderId) {
+    @PatchMapping("/status/reject/{id}")
+    public ResponseEntity changeStatusToReject(@PathVariable("id") Long orderId) {
         orderManagingService.rejectOrder(orderId);
         return ResponseEntity.ok("Order with given id Rejected!! ");
     }
 
-    @PatchMapping("/status/accept")
-    public ResponseEntity changeStatusToAccept(@RequestBody Long orderId) {
+    @PatchMapping("/status/accept/{id}")
+    public ResponseEntity changeStatusToAccept(@PathVariable("id") Long orderId) {
         orderManagingService.acceptOrder(orderId);
         return ResponseEntity.ok("Order with given id Accepted!! ");
     }
@@ -42,7 +43,7 @@ public class OrderController {
         orderManagingService.deliverOrder(orderId);
         return ResponseEntity.ok("Order with given id Delivered!! ");
     }
-
+    @PreAuthorize("hasAuthority('ORDER_SERVICE')")
     @GetMapping
     public ResponseEntity getAll() {
         return ResponseEntity.ok(orderService.getAllOrder());

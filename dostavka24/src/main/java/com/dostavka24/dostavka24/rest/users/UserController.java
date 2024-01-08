@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -17,7 +17,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity register(@RequestBody UserCreationDto user){
         if(!checkPasswordLength(user.getPassword())){
             return new ResponseEntity("Password's length less than 4 ", HttpStatus.BAD_REQUEST);

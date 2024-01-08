@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/address")
 public class AddressController {
     private final AddressService addressService;
 
@@ -18,30 +18,30 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @PostMapping("/address")
+    @PostMapping
     public ResponseEntity create(@RequestBody AddressCreationDto addressCreationDto){
         addressService.create(addressCreationDto);
         return ResponseEntity.ok(addressCreationDto);
     }
 
-    @DeleteMapping("/address/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@RequestBody Long id){
         addressService.delete(id);
         return ResponseEntity.ok("deleted");
     }
 
-    @GetMapping("/addresses")
+    @GetMapping
     public ResponseEntity getAll(){
         List<Address> addresses = addressService.getAll();
         return ResponseEntity.ok(addresses);
     }
 
-    @GetMapping("/addresses/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getById(@RequestBody Long id){
         return ResponseEntity.ok(addressService.getById(id));
     }
 
-    @PutMapping("/addreses/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id,@RequestBody AddressUpdateDto addressUpdateDto){
         Address updatedAddress = addressService.update(id,addressUpdateDto);
         return ResponseEntity.ok(updatedAddress);

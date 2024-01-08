@@ -29,10 +29,10 @@ dependencies {
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 	implementation 'org.hibernate.validator:hibernate-validator:7.0.2.Final'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
-//	implementation 'org.springframework.boot:spring-boot-starter-mail:2.5.6'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-//	implementation 'org.projectlombok:lombok:1.18.28'
-    runtimeOnly 'org.postgresql:postgresql'
+	implementation group: 'io.github.cdimascio', name: 'java-dotenv', version: '5.2.2'
+	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
