@@ -1,5 +1,6 @@
 package com.dostavka24.dostavka24.domain.dtos.users;
 
+import com.dostavka24.dostavka24.domain.dtos.addresses.AddressUpdateDto;
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.users.Role;
 
@@ -11,14 +12,14 @@ public class UserUpdateDto {
     private String firstName;
     private String lastName;
     private String email;
-    private Address address;
+    private AddressUpdateDto address;
     private Role role;
 
-    public Address getAddress() {
+    public AddressUpdateDto getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressUpdateDto address) {
         this.address = address;
     }
 

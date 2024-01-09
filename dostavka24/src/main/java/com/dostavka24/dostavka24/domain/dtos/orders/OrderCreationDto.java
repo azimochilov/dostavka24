@@ -1,17 +1,17 @@
 package com.dostavka24.dostavka24.domain.dtos.orders;
 
-import com.dostavka24.dostavka24.domain.entities.addresses.Address;
+import com.dostavka24.dostavka24.domain.dtos.addresses.AddressCreationDto;
 
 public class OrderCreationDto {
 
-    private Address address;
+    private AddressCreationDto address;
     private String phone;
 
-    public Address getAddress() {
+    public AddressCreationDto getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressCreationDto address) {
         this.address = address;
     }
 

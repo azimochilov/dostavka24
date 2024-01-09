@@ -17,16 +17,21 @@ public class User {
     private Long id;
     private String userName;
     private String password;
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "lastname")
     private String lastName;
     private String email;
+    @Column(name = "updatedat")
     private Instant updatedAt;
+    @Column(name = "isactive")
     private boolean isActive = false;
+    @Column(name = "registeredat")
     private Instant registeredAt;
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
 

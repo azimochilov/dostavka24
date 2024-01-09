@@ -19,7 +19,6 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
     @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping
     public ResponseEntity create(@RequestBody ProductCreationDto product){

@@ -22,7 +22,11 @@ public class OrderItemService {
     private final DeliveryCalService deliveryCalService;
 
 
-    public OrderItemService(OrderItemRepository orderItemRepository, ProductRepository productRepository, OrderRepository orderRepository, DeliveryCalService deliveryCalService) {
+    public OrderItemService(OrderItemRepository orderItemRepository,
+                            ProductRepository productRepository,
+                            OrderRepository orderRepository,
+                            DeliveryCalService deliveryCalService
+    ) {
         this.orderItemRepository = orderItemRepository;
         this.productRepository = productRepository;
         this.orderRepository = orderRepository;
@@ -31,7 +35,7 @@ public class OrderItemService {
     }
 
     public OrderItem createOrderItem(OrderItemCreationDto orderItemDto){
-
+        //getting current user from token
         Long currentId = SecurityUtils.getCurrentUserId();
         Order userOrder = orderRepository.getByUserId(currentId);
 
@@ -48,6 +52,7 @@ public class OrderItemService {
         orderItem.setCreatedAt(Instant.now());
         orderItem.setProduct(product);
 
+        //calculation of total amount of product and their total cost
         Double total = deliveryCalService.calculationOfTotalPriceOfProduct(product.getPrice() , orderItemDto.getCount());
         userOrder.setTotalPrice(userOrder.getTotalPrice() + total);
         userOrder.setAmountOfProducts(userOrder.getAmountOfProducts()+orderItemDto.getCount());

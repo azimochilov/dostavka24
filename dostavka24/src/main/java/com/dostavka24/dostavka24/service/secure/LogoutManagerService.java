@@ -11,6 +11,7 @@ import java.time.Instant;
 public class LogoutManagerService {
     private final JwtProperties jwtProperties;
     public void logout() {
+
         jwtProperties.setExpiration(Instant.now());
     }
 }

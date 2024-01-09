@@ -4,6 +4,7 @@ import com.dostavka24.dostavka24.domain.dtos.orders.OrderCreationDto;
 import com.dostavka24.dostavka24.domain.entities.orders.Order;
 import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.security.CustomUserDetailService;
+import com.dostavka24.dostavka24.service.addresses.AddressService;
 import com.dostavka24.dostavka24.service.commons.DeliveryCalService;
 import com.dostavka24.dostavka24.service.commons.OrderDetailsProcessor;
 import com.dostavka24.dostavka24.service.utils.SecurityUtils;
@@ -17,25 +18,32 @@ import java.util.List;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderItemService orderItemService;
-    private final CustomUserDetailService customUserDetail;
+    private final AddressService addressService;
     private final DeliveryCalService deliveryCalService;
     private final OrderDetailsProcessor orderDetailsProcessor;
-    public OrderService(OrderRepository orderRepository, OrderItemService orderItemService, CustomUserDetailService customUserDetail, DeliveryCalService deliveryCalService, OrderDetailsProcessor orderDetailsProcessor) {
+    public OrderService(OrderRepository orderRepository,
+                        AddressService addressService,
+                        DeliveryCalService deliveryCalService,
+                        OrderDetailsProcessor orderDetailsProcessor
+    ) {
+
         this.orderRepository = orderRepository;
-        this.orderItemService = orderItemService;
-        this.customUserDetail = customUserDetail;
+        this.addressService = addressService;
         this.deliveryCalService = deliveryCalService;
         this.orderDetailsProcessor = orderDetailsProcessor;
+
     }
 
     public Order craeteOrder(OrderCreationDto orderDto){
+        //current user
         Long currentUserId = SecurityUtils.getCurrentUserId();
 
         Order userOrder = orderRepository.getByUserId(currentUserId);
-        userOrder.setAddress(orderDto.getAddress());
+        userOrder.setAddress(addressService.create(orderDto.getAddress()));
         userOrder.setCreatedAt(Instant.now());
         userOrder.setPhone(orderDto.getPhone());
+
+        //calculation of delivery time
         userOrder.setAmountOfProducts(orderDetailsProcessor.getProductsByOrderId(userOrder.getId()));
         userOrder.setDeliveryTime(deliveryCalService.calculateEstimatedDeliveryTime(userOrder.getAmountOfProducts(),4));
 

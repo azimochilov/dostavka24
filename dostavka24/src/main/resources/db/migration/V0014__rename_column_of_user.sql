@@ -1,0 +1,1 @@
+ALTER TABLE dastavka24_user RENAME COLUMN userName TO user_name;

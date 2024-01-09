@@ -21,7 +21,6 @@ public class AddressService {
     public Address create(AddressCreationDto addressCreationDto) {
 
         Address address = new Address();
-
         address.setCity(addressCreationDto.getCity());
         address.setStreet(addressCreationDto.getStreet());
         address.setLatitude(addressCreationDto.getLatitude());
@@ -32,14 +31,14 @@ public class AddressService {
 
     public void delete(Long id) {
 
-        Address addressForDeletion = addressRepository.findById(id).get();
+        Address addressForDeletion = addressRepository.getById(id);
 
         addressRepository.delete(addressForDeletion);
     }
 
     public Address update(Long id, AddressUpdateDto updtAddress) {
 
-        Address existingAddress = addressRepository.findById(id).get();
+        Address existingAddress = addressRepository.getById(id);
         if (existingAddress == null) {
             throw new NotFoundException("Address not found");
         }
@@ -58,7 +57,7 @@ public class AddressService {
     }
 
     public Address getById(Long id) {
-        Address existingAddress = addressRepository.findById(id).get();
+        Address existingAddress = addressRepository.getById(id);
         if (existingAddress == null) {
             throw new NotFoundException("Address not found with this id");
         }

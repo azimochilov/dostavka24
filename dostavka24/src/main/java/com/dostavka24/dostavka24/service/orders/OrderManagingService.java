@@ -11,24 +11,29 @@ public class OrderManagingService {
     private final OrderRepository orderRepository;
 
     public OrderManagingService(OrderRepository orderRepository) {
+
         this.orderRepository = orderRepository;
     }
 
     public void acceptOrder(Long orderId){
+
         Order order = orderRepository.getById(orderId);
         if(order == null){
             throw new NotFoundException("Order not found!");
         }
+
         if(order.getCart() == true) {
             order.setStatus(OrderStatus.ACCEPTED);
         }
     }
 
     public void rejectOrder(Long orderId){
+
         Order order = orderRepository.getById(orderId);
         if(order == null){
             throw new NotFoundException("Order not found!");
         }
+
         if(order.getCart() == true) {
             order.setStatus(OrderStatus.REJECTED);
             order.setCart(false);
@@ -39,10 +44,12 @@ public class OrderManagingService {
     }
 
     public void deliverOrder(Long orderId){
+
         Order order = orderRepository.getById(orderId);
         if(order == null){
             throw new NotFoundException("Order not found!");
         }
+
         if(order.getCart() == true) {
             order.setStatus(OrderStatus.DELIVERED);
             order.setCart(false);

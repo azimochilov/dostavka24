@@ -26,9 +26,11 @@ public class ProductService {
 
         Product exsistsProduct = productRepository.findByName(product.getName());
         if (exsistsProduct != null) {
-            throw new NotFoundException("Product already exsists! ");
+            exsistsProduct.setProductStatus(product.getProductStatus());
+            exsistsProduct.setPrice(product.getPrice());
         }
 
+        exsistsProduct = new Product();
         exsistsProduct.setCreateAt(Instant.now());
         exsistsProduct.setProductStatus(product.getProductStatus());
         exsistsProduct.setName(product.getName());
@@ -38,12 +40,15 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        Product productForDeletion = productRepository.findById(id).get();
+
+        Product productForDeletion = productRepository.getById(id);
+
         productRepository.delete(productForDeletion);
     }
 
     public Product update(Long id, ProductUpdateDto updtProduct) {
-        Product existingProduct = productRepository.findById(id).get();
+
+        Product existingProduct = productRepository.getById(id);
 
         if (existingProduct == null) {
             throw new NotFoundException("Product not found");
@@ -62,10 +67,12 @@ public class ProductService {
     }
 
     public List<Product> getAllByStatus(ProductStatus status){
+
         return productRepository.getAllByProductStatus(status);
     }
 
     public Product getById(Long id) {
+
         Product existingProduct = productRepository.getById(id);
         if (existingProduct == null) {
             throw new NotFoundException("Product not found with this id");

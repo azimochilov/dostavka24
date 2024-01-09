@@ -20,14 +20,19 @@ public class LoginManagerService {
     private final JwtIssuer jwtIssuer;
 
     public LoginResponseDto attemptLogin(String username, String password) {
+
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         var principal = (UserPrincipal) authentication.getPrincipal();
+
         var roles = principal.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+
         var token = jwtIssuer.issue(principal.getUserId(), principal.getUsername(), roles);
+
         return LoginResponseDto.builder().accessToken(token).build();
     }
 }

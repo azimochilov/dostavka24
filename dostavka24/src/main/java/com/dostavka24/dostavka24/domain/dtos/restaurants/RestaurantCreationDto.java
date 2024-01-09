@@ -1,10 +1,11 @@
 package com.dostavka24.dostavka24.domain.dtos.restaurants;
 
+import com.dostavka24.dostavka24.domain.dtos.addresses.AddressCreationDto;
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 
 public class RestaurantCreationDto {
     private String name;
-    private Address address;
+    private AddressCreationDto address;
 
     public String getName() {
         return name;
@@ -14,11 +15,11 @@ public class RestaurantCreationDto {
         this.name = name;
     }
 
-    public Address getAddress() {
+    public AddressCreationDto getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressCreationDto address) {
         this.address = address;
     }
 }

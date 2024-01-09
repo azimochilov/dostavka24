@@ -23,43 +23,60 @@ public class RoleService {
     private final PrivilegeRepository privilegeRepository;
 
     public Optional<Role> getByName(String name) {
+
         return Optional.of(roleRepository.findByName(name).orElseThrow(() ->
                 new NotFoundException("Not found role with name: " + name)));
     }
 
     public Optional<Role> getById(Long id) {
+
         return Optional.of(roleRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Not found role with id: " + id)));
     }
 
-    public List<Role> getAll() {
+    public List<Role> getAll()
+    {
+
         return roleRepository.findAll();
     }
 
     public Optional<Role> update(Long id, RoleCreationDto roleDto) {
+
         Role role = roleRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Not found role with id: " + id));
+
         role.setName(roleDto.getName());
+
         roleRepository.save(role);
+
         return Optional.of(role);
     }
 
     public Optional<Role> create(RoleCreationDto roleDto) {
+
         Role role = new Role();
         List<RolePrivilege> rolePrivileges = new ArrayList<>();
         for (PrivilegeCreationDto p : roleDto.getPrivileges()) {
+
             Privilege privilege = privilegeRepository.findByName(p.getName()).orElseThrow(() ->
                     new NotFoundException("Not found privilege with name: " + p.getName()));
+
             RolePrivilege rolePrivilege = new RolePrivilege();
             rolePrivilege.setPrivilege(privilege);
+
             rolePrivilege.setRole(role);
         }
+
         role.setName(roleDto.getName());
+
         roleRepository.save(role);
+
         return Optional.of(role);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id)
+    {
+
         roleRepository.deleteById(id);
     }
 }

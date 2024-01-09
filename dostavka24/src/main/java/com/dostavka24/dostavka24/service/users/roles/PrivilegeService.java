@@ -14,6 +14,7 @@ import java.util.Optional;
 public class PrivilegeService {
     private final PrivilegeRepository privilegeRepository;
     public Optional<Privilege> create(PrivilegeCreationDto privilegeDto) {
+
         return Optional.of(privilegeRepository.save(Privilege.builder().name(privilegeDto.getName()).build()));
     }
 

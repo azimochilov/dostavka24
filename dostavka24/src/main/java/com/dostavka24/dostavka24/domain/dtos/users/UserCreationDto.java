@@ -1,5 +1,6 @@
 package com.dostavka24.dostavka24.domain.dtos.users;
 
+import com.dostavka24.dostavka24.domain.dtos.addresses.AddressCreationDto;
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.users.Role;
 
@@ -11,16 +12,8 @@ public class UserCreationDto {
     private String firstName;
     private String lastName;
     private String email;
-    private Address adress;
-    private Role role;
-
-    public Address getAdress() {
-        return adress;
-    }
-
-    public void setAdress(Address adress) {
-        this.adress = adress;
-    }
+    private AddressCreationDto adress;
+    private String role;
 
     public String getUserName() {
         return userName;
@@ -61,12 +54,19 @@ public class UserCreationDto {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
+    }
+
+    public AddressCreationDto getAdress() {
+        return adress;
+    }
+
+    public void setAdress(AddressCreationDto adress) {
+        this.adress = adress;
     }
 }
