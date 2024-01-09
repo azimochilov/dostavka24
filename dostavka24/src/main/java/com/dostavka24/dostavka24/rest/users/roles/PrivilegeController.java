@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/privilege")
-@PreAuthorize("hasAuthority('ROLE_PRIVILEGE_SERVICE')")
+//@PreAuthorize("hasAuthority('ROLE_PRIVILEGE_SERVICE')")
 public class PrivilegeController {
     private final PrivilegeService privilegeService;
 

@@ -28,15 +28,19 @@ public class RolePrivilege {
         return privilege;
     }
 
-    public void setPrivilege(Privilege privilege) {
-        this.privilege = privilege;
-    }
+
 
     public Role getRole() {
         return role;
     }
 
+    public void setPrivilege(Privilege privilege) {
+        this.privilege = privilege;
+        privilege.getRolePrivileges().add(this);
+    }
+
     public void setRole(Role role) {
         this.role = role;
+        role.getRolePrivileges().add(this);
     }
 }

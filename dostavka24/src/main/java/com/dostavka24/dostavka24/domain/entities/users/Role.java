@@ -1,9 +1,7 @@
 package com.dostavka24.dostavka24.domain.entities.users;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
@@ -13,12 +11,14 @@ import java.util.List;
 @Entity
 @Table(name = "Role")
 public class Role implements Serializable {
-    @Id
+    @Column(nullable = false, unique = true)
     private String name;
 
     @jakarta.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Builder.Default
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RolePrivilege> rolePrivileges = new ArrayList<>();
 

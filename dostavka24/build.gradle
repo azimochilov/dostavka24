@@ -32,6 +32,8 @@ dependencies {
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation group: 'io.github.cdimascio', name: 'java-dotenv', version: '5.2.2'
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

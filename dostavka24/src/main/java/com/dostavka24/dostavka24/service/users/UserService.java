@@ -37,6 +37,7 @@ public class UserService {
         Order order = new Order();
 
         User regUser =  new User();
+
         regUser.setPassword(passwordEncoder.encode(user.getPassword()));
         regUser.setEmail(user.getEmail());
         regUser.setUserName(user.getUserName());
