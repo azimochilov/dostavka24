@@ -5,6 +5,7 @@ import com.dostavka24.dostavka24.domain.dtos.addresses.AddressUpdateDto;
 import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.service.addresses.AddressService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class AddressController {
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
-
+    @PreAuthorize("hasAuthority('CREATE_USER')")
     @PostMapping
     public ResponseEntity create(@RequestBody AddressCreationDto addressCreationDto){
         addressService.create(addressCreationDto);
@@ -40,7 +41,7 @@ public class AddressController {
     public ResponseEntity getById(@RequestBody Long id){
         return ResponseEntity.ok(addressService.getById(id));
     }
-
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id,@RequestBody AddressUpdateDto addressUpdateDto){
         Address updatedAddress = addressService.update(id,addressUpdateDto);

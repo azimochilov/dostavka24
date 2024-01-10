@@ -20,24 +20,24 @@ public class OrderController {
         this.orderManagingService = orderManagingService;
     }
 
-
+    @PreAuthorize("hasAuthority('CREATE_ORDER_USER')")
     @PostMapping
     public ResponseEntity createOrder(@RequestBody OrderCreationDto orderCreationDto) {
         return ResponseEntity.ok(orderService.craeteOrder(orderCreationDto));
     }
-
+    @PreAuthorize("hasAuthority('CHANGE_STATUS_WAITER')")
     @PatchMapping("/status/reject/{id}")
     public ResponseEntity changeStatusToReject(@PathVariable("id") Long orderId) {
         orderManagingService.rejectOrder(orderId);
         return ResponseEntity.ok("Order with given id Rejected!! ");
     }
-
+    @PreAuthorize("hasAuthority('CHANGE_STATUS_WAITER')")
     @PatchMapping("/status/accept/{id}")
     public ResponseEntity changeStatusToAccept(@PathVariable("id") Long orderId) {
         orderManagingService.acceptOrder(orderId);
         return ResponseEntity.ok("Order with given id Accepted!! ");
     }
-
+    @PreAuthorize("hasAuthority('CHANGE_STATUS_WAITER')")
     @PatchMapping("/status/deliver/{id}")
     public ResponseEntity changeStatusToDeliver(@PathVariable("id") Long orderId) {
         orderManagingService.deliverOrder(orderId);
@@ -48,7 +48,7 @@ public class OrderController {
     public ResponseEntity getAll() {
         return ResponseEntity.ok(orderService.getAllOrder());
     }
-
+    @PreAuthorize("hasAuthority('CHANGE_STATUS_WAITER')")
     @GetMapping("/{status}")
     public ResponseEntity<?> getAllByStatus(@RequestParam(name = "status", required = false) Boolean isActive) {
         if (isActive == null) {

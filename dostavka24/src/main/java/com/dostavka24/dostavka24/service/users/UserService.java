@@ -74,7 +74,7 @@ public class UserService {
         order.setUser(regUser);
         orderRepository.save(order);
 
-        emailService.sendSimpleMessage(userDto.getEmail(), "Verify Code", emailVerificationService.generateCode());
+ //       emailService.sendSimpleMessage(userDto.getUserName(), "Verify Code", emailVerificationService.generateCode());
 
         return regUser;
     }
