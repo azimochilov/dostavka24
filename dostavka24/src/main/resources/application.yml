@@ -1,39 +1,39 @@
 server:
-  port: ${SERVER_PORT}
+  port: 8081
 spring:
   flyway:
-    enabled: ${MIGRATION_ENABLE}
+    enabled: true
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://host.docker.internal:5433/postgres
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
-      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
-    show-sql: ${SPRING_JPA_SHOW_SQL}
-    database: ${SPRING_JPA_DATABASE}
-    database-platform: ${SPRING_JPA_DATABASE_PLATFORM}
+      ddl-auto: none
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   springdoc:
     api-docs:
-      path: ${SPRING_SPRINGDOC_API_DOCS_PATH}
+      path: /api-docs
     swagger-ui:
-      path: ${SPRING_SPRINGDOC_SWAGGER_UI_PATH}
-      enabled: ${SPRING_SPRINGDOC_SWAGGER_UI_ENABLED}
-
+      path: /swagger-ui.html
+      enabled: true
   mail:
-    host: ${SPRING_MAIL_HOST}
-    port: ${SPRING_MAIL_PORT}
-    username: ${SPRING_MAIL_USERNAME}
-    password: ${SPRING_MAIL_PASSWORD}
+    host: smtp.gmail.com
+    port: 587
+    username: azimochilov29@gmail.com
+    password: "ovju mahs dzom kgis"
     properties:
       mail:
         smtp:
-          auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH}
+          auth: true
           starttls:
-            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE}
+            enable: true
+
 
 security:
   jwt:
-    secret-key: ${SECURITY_JWT_SECRET_KEY}
+    secret-key: secret
 

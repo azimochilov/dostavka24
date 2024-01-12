@@ -13,8 +13,7 @@ import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.repository.RoleRepository;
 import com.dostavka24.dostavka24.repository.UserRepository;
 import com.dostavka24.dostavka24.service.addresses.AddressService;
-import com.dostavka24.dostavka24.service.email.EmailService;
-import com.dostavka24.dostavka24.service.email.EmailVerificationService;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,24 +27,19 @@ public class UserService {
     private final AddressService addressService;
     private final OrderRepository orderRepository;
     private final RoleRepository roleRepository;
-    private final EmailService emailService;
-    private final EmailVerificationService emailVerificationService;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        AddressService addressService,
                        OrderRepository orderRepository,
-                       RoleRepository roleRepository,
-                       EmailService emailService,
-                       EmailVerificationService emailVerificationService
+                       RoleRepository roleRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.addressService = addressService;
         this.orderRepository = orderRepository;
         this.roleRepository = roleRepository;
-        this.emailService = emailService;
-        this.emailVerificationService = emailVerificationService;
+
     }
 
 
@@ -135,23 +129,5 @@ public class UserService {
         return userRepository.existsByUserName(userName);
     }
 
-    public boolean verification(Long id, String code) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("User with id %s not found", id)
-        ));
-        if (user.isActive()) {
-            return false;
-        }
-        Instant now = Instant.now();
-        if (!now.isBefore(emailVerificationService.getExpiredDate())) {
-            return false;
-        }
-        if (!code.equals(emailVerificationService.getVerifyCode())) {
-            return false;
-        }
-        user.setActive(true);
-        userRepository.save(user);
-        return true;
-    }
 
 }

@@ -1,6 +1,6 @@
 package com.dostavka24.dostavka24;
 
-import io.github.cdimascio.dotenv.Dotenv;
+
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

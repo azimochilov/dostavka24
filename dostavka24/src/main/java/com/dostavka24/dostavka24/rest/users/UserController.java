@@ -18,7 +18,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity register(@RequestBody UserCreationDto user){
+    public ResponseEntity<?> register(@RequestBody UserCreationDto user){
         if(!checkPasswordLength(user.getPassword())){
             return new ResponseEntity("Password's length less than 4 ", HttpStatus.BAD_REQUEST);
         }
@@ -33,13 +33,6 @@ public class UserController {
 
         return (password.length()>4);
     }
-    @PostMapping("/{id}/verify")
-    public ResponseEntity<?> verifyUser(@PathVariable Long id, @RequestBody VerifyDto verifyDto){
-        boolean verification = userService.verification(id, verifyDto.getCode());
-        if (verification) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.badRequest().build();
-    }
+
 
 }

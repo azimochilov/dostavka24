@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.5'
 
 services:
   postgres:
@@ -6,8 +6,9 @@ services:
     image: postgres
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Yaironman@.26
+      POSTGRES_PASSWORD: postgres
       PGDATA: /data/postgres
+
     volumes:
       - postgres:/data/postgres
     ports:
@@ -30,7 +31,7 @@ services:
       - postgres
     restart: unless-stopped
 
-  arena:
+  dostavka24:
     container_name: dostavka_24
     build:
       context: .
@@ -39,11 +40,10 @@ services:
       - pgadmin
       - postgres
     ports:
-      - "8080:8080"
+      - "8080:8081"
     networks:
       - postgres
     restart: unless-stopped
-
 networks:
   postgres:
     driver: bridge
