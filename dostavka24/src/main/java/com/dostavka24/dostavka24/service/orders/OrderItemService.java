@@ -13,6 +13,7 @@ import com.dostavka24.dostavka24.service.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class OrderItemService {
@@ -36,8 +37,18 @@ public class OrderItemService {
 
     public OrderItem createOrderItem(OrderItemCreationDto orderItemDto){
         //getting current user from token
-        Long currentId = SecurityUtils.getCurrentUserId();
-        Order userOrder = orderRepository.getByUserId(currentId);
+        Long currentUserId = SecurityUtils.getCurrentUserId();
+
+        List<Order> userOrders = orderRepository.findAllByUserId(currentUserId);
+        Long orderId = 0L;
+        for (var order :userOrders){
+            if(order.getCart() == true){
+                orderId = order.getId();
+                break;
+            }
+        }
+
+        Order userOrder = orderRepository.getById(orderId);
 
         Product product = productRepository.findByName(orderItemDto.getName());
         if(product == null){

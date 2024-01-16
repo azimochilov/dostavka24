@@ -38,7 +38,16 @@ public class OrderService {
         //current user
         Long currentUserId = SecurityUtils.getCurrentUserId();
 
-        Order userOrder = orderRepository.getByUserId(currentUserId);
+        List<Order> userOrders = orderRepository.findAllByUserId(currentUserId);
+        Long orderId = 0L;
+        for (var order :userOrders){
+            if(order.getCart() == true){
+                orderId = order.getId();
+                break;
+            }
+        }
+
+        Order userOrder = orderRepository.getByUserId(orderId);
         userOrder.setAddress(addressService.create(orderDto.getAddress()));
         userOrder.setCreatedAt(Instant.now());
         userOrder.setPhone(orderDto.getPhone());

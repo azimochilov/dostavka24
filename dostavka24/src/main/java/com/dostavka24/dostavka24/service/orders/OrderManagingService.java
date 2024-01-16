@@ -4,15 +4,18 @@ import com.dostavka24.dostavka24.domain.entities.orders.Order;
 import com.dostavka24.dostavka24.domain.enums.OrderStatus;
 import com.dostavka24.dostavka24.exception.NotFoundException;
 import com.dostavka24.dostavka24.repository.OrderRepository;
+import com.dostavka24.dostavka24.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderManagingService {
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
 
-    public OrderManagingService(OrderRepository orderRepository) {
+    public OrderManagingService(OrderRepository orderRepository, UserRepository userRepository) {
 
         this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
     }
 
     public void acceptOrder(Long orderId){
@@ -39,7 +42,10 @@ public class OrderManagingService {
             order.setCart(false);
             orderRepository.save(order);
             Order newOrder = new Order();
+            newOrder.setCart(true);
             newOrder.setUser(order.getUser());
+            orderRepository.save(newOrder);
+
         }
     }
 
@@ -56,6 +62,8 @@ public class OrderManagingService {
             orderRepository.save(order);
             Order newOrder = new Order();
             newOrder.setUser(order.getUser());
+            orderRepository.save(newOrder);
+
         }
     }
 }

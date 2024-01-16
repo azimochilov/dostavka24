@@ -12,4 +12,6 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     Order getById(Long orderId);
     List<Order> findAllByIsCart(Boolean status);
     Order getOrderByUserId(Long id);
+    List<Order> findAllByUserId(Long userId);
+    Order findFirstByUserOrderByCreatedAtDesc(Long id);
 }
