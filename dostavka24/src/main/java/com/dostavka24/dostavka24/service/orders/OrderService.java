@@ -3,7 +3,6 @@ package com.dostavka24.dostavka24.service.orders;
 import com.dostavka24.dostavka24.domain.dtos.orders.OrderCreationDto;
 import com.dostavka24.dostavka24.domain.entities.orders.Order;
 import com.dostavka24.dostavka24.repository.OrderRepository;
-import com.dostavka24.dostavka24.security.CustomUserDetailService;
 import com.dostavka24.dostavka24.service.addresses.AddressService;
 import com.dostavka24.dostavka24.service.commons.DeliveryCalService;
 import com.dostavka24.dostavka24.service.commons.OrderDetailsProcessor;
