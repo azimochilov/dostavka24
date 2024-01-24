@@ -45,7 +45,6 @@ public class RestaurantService {
         exsistsRestaurant = new Restaurant();
         exsistsRestaurant.setName(restaurantCreationDto.getName());
         exsistsRestaurant.setAddress(address);
-        exsistsRestaurant.setName(exsistsRestaurant.getName());
 
         return restaurantRepository.save(exsistsRestaurant);
     }
