@@ -122,4 +122,12 @@ public class Order implements Serializable {
     public void setDeliveryTime(String deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
 }

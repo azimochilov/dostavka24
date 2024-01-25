@@ -24,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
@@ -222,8 +221,6 @@ public class UserServiceTest {
 
         assertFalse(exists);
     }
-
-
 
 }
 
