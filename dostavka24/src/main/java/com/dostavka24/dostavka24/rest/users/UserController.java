@@ -1,6 +1,8 @@
 package com.dostavka24.dostavka24.rest.users;
 import com.dostavka24.dostavka24.domain.dtos.users.UserCreationDto;
+import com.dostavka24.dostavka24.domain.dtos.users.UserUpdateDto;
 import com.dostavka24.dostavka24.domain.dtos.users.VerifyDto;
+import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.service.users.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +36,10 @@ public class UserController {
         return (password.length()>4);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserUpdateDto> updateUser(@PathVariable Long id, @RequestBody UserUpdateDto userDto) {
+        User user = userService.update(id, userDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }

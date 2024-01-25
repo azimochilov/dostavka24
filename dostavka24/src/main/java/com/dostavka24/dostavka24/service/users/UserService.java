@@ -85,6 +85,8 @@ public class UserService {
 
     public User update(Long id, UserUpdateDto updatedUserData) {
 
+        Role role = roleRepository.getByName(updatedUserData.getRole());
+
         User existingUser = userRepository.getById(id);
         if (existingUser == null) {
             throw new NotFoundException("User not found with given id " );
@@ -92,11 +94,11 @@ public class UserService {
 
         existingUser.setUserName(updatedUserData.getUserName());
         existingUser.setPassword(updatedUserData.getPassword());
-        existingUser.setAddress(addressService.update(id, updatedUserData.getAddress()));
+        existingUser.setAddress(addressService.update(updatedUserData.getAddressId(), updatedUserData.getAddress()));
         existingUser.setEmail(updatedUserData.getEmail());
         existingUser.setFirstName(updatedUserData.getFirstName());
         existingUser.setLastName(updatedUserData.getLastName());
-        existingUser.setRole(updatedUserData.getRole());
+        existingUser.setRole(role);
 
         return userRepository.save(existingUser);
     }

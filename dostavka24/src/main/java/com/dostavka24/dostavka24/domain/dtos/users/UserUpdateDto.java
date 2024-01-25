@@ -12,8 +12,9 @@ public class UserUpdateDto {
     private String firstName;
     private String lastName;
     private String email;
+    private Long AddressId;
     private AddressUpdateDto address;
-    private Role role;
+    private String role;
 
     public AddressUpdateDto getAddress() {
         return address;
@@ -63,11 +64,18 @@ public class UserUpdateDto {
         this.email = email;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
-
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getAddressId() {
+        return AddressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        AddressId = addressId;
     }
 }
