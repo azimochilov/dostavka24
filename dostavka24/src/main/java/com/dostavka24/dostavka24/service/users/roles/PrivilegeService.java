@@ -19,16 +19,18 @@ public class PrivilegeService {
     }
 
     public Optional<Privilege> getById(Long id) {
-        return Optional.empty();
+        return privilegeRepository.findById(id);
     }
+
 
     public Optional<Privilege> update(Long id, PrivilegeCreationDto privilegeDto) {
         return Optional.empty();
     }
 
     public List<Privilege> getAll() {
-        return null;
+        return privilegeRepository.findAll();
     }
+
 
     public void delete(Long id) {
 
