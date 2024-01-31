@@ -24,6 +24,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'org.flywaydb:flyway-core:8.5.10'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.12.3'
 	implementation 'com.auth0:java-jwt:4.4.0'
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
@@ -39,8 +40,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.1'
 	testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.9.0'
-
-
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	testImplementation 'org.springframework.security:spring-security-test:5.7.3'
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 

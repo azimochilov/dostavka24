@@ -2,10 +2,12 @@ package com.dostavka24.dostavka24.domain.entities.addresses;
 
 import com.dostavka24.dostavka24.domain.entities.users.User;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Entity
+@Data
 @Table(name = "addresses")
 public class Address implements Serializable {
     @Id

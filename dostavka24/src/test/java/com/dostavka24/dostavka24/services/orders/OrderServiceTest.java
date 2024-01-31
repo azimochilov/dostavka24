@@ -162,6 +162,7 @@ public class OrderServiceTest {
 
     @Test
     void shouldReturnOrdersByStatus() {
+
         List<Order> orders = Arrays.asList(new Order(), new Order()); // Sample list of orders
         Boolean status = true; // Example status to filter by
 
@@ -173,7 +174,6 @@ public class OrderServiceTest {
         assertEquals(2, retrievedOrders.size());
         verify(orderRepository).findAllByIsCart(status);
     }
-
 
 }
 

@@ -10,6 +10,7 @@ import com.dostavka24.dostavka24.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddressService {
@@ -57,10 +58,8 @@ public class AddressService {
     }
 
     public Address getById(Long id) {
+
         Address existingAddress = addressRepository.getById(id);
-        if (existingAddress == null) {
-            throw new NotFoundException("Address not found with this id");
-        }
         return existingAddress;
     }
 
