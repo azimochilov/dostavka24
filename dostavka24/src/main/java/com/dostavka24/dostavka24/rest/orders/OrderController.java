@@ -46,6 +46,7 @@ public class OrderController {
     @PreAuthorize("hasAuthority('ORDER_SERVICE')")
     @GetMapping
     public ResponseEntity getAll() {
+
         return ResponseEntity.ok(orderService.getAllOrder());
     }
     @PreAuthorize("hasAuthority('CHANGE_STATUS_WAITER')")

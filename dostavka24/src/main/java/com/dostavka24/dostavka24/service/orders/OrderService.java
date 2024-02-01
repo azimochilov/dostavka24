@@ -2,6 +2,7 @@ package com.dostavka24.dostavka24.service.orders;
 
 import com.dostavka24.dostavka24.domain.dtos.orders.OrderCreationDto;
 import com.dostavka24.dostavka24.domain.entities.orders.Order;
+import com.dostavka24.dostavka24.exception.NotFoundException;
 import com.dostavka24.dostavka24.repository.OrderRepository;
 import com.dostavka24.dostavka24.service.addresses.AddressService;
 import com.dostavka24.dostavka24.service.commons.DeliveryCalService;
@@ -38,15 +39,11 @@ public class OrderService {
         Long currentUserId = SecurityUtils.getCurrentUserId();
 
         List<Order> userOrders = orderRepository.findAllByUserId(currentUserId);
-        Long orderId = 0L;
-        for (var order :userOrders){
-            if(order.getCart() == true){
-                orderId = order.getId();
-                break;
-            }
-        }
+        Order userOrder = userOrders.stream()
+                .filter(Order::getCart)
+                .findFirst()
+                .orElseGet(() -> new Order()); // Create new order if not found
 
-        Order userOrder = orderRepository.getByUserId(orderId);
         userOrder.setAddress(addressService.create(orderDto.getAddress()));
         userOrder.setCreatedAt(Instant.now());
         userOrder.setPhone(orderDto.getPhone());
@@ -63,12 +60,10 @@ public class OrderService {
 
 
     public List<Order> getAllOrder(){
-
         return orderRepository.findAll();
     }
 
     public List<Order> getAllByStatus(Boolean status){
-
         return orderRepository.findAllByIsCart(status);
     }
 

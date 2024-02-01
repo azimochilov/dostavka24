@@ -1,9 +1,11 @@
 package com.dostavka24.dostavka24.rest.restaurants;
 
+import com.dostavka24.dostavka24.domain.dtos.addresses.AddressCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.products.ProductCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.products.ProductUpdateDto;
 import com.dostavka24.dostavka24.domain.dtos.restaurants.RestaurantCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.restaurants.RestaurantUpdateDto;
+import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.restaurants.Product;
 import com.dostavka24.dostavka24.domain.entities.restaurants.Restaurant;
 import com.dostavka24.dostavka24.service.restaurant.RestaurantService;
@@ -28,7 +30,7 @@ public class RestaurantController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@RequestBody Long id){
+    public ResponseEntity delete(@PathVariable Long id){
         restaurantService.delete(id);
         return ResponseEntity.ok("deleted");
     }
@@ -40,8 +42,21 @@ public class RestaurantController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@RequestBody Long id){
-        return ResponseEntity.ok(restaurantService.getById(id));
+    public ResponseEntity getById(@PathVariable Long id){
+
+        Restaurant restaurant = restaurantService.getById(id);
+        RestaurantCreationDto resRes = new RestaurantCreationDto();
+
+        AddressCreationDto address = new AddressCreationDto();
+        address.setLongitude(restaurant.getAddress().getLongitude());
+        address.setLatitude(restaurant.getAddress().getLatitude());
+        address.setStreet(restaurant.getAddress().getStreet());
+        address.setCity(restaurant.getAddress().getCity());
+
+        resRes.setName(restaurant.getName());
+        resRes.setAddress(address);
+
+        return ResponseEntity.ok(resRes);
     }
 
     @PutMapping("/{id}")

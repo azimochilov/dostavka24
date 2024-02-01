@@ -4,6 +4,7 @@ import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.restaurants.Restaurant;
 import com.dostavka24.dostavka24.domain.entities.users.User;
 import com.dostavka24.dostavka24.domain.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Order implements Serializable {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
     private Instant createdAt;
@@ -32,6 +34,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
