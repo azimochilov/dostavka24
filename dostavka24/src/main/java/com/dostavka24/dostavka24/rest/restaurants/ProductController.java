@@ -3,6 +3,7 @@ package com.dostavka24.dostavka24.rest.restaurants;
 
 import com.dostavka24.dostavka24.domain.dtos.products.ProductCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.products.ProductUpdateDto;
+import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.restaurants.Product;
 import com.dostavka24.dostavka24.service.products.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class ProductController {
 
     @PreAuthorize("hasAuthority('DELETE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@RequestBody Long id){
+    public ResponseEntity delete(@PathVariable Long id){
         productService.delete(id);
         return ResponseEntity.ok("deleted");
     }
@@ -40,14 +41,21 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@RequestBody Long id){
-        return ResponseEntity.ok(productService.getById(id));
+    public ResponseEntity getById(@PathVariable Long id){
+        Product product = productService.getById(id);
+
+        ProductCreationDto productCreationDto = new ProductCreationDto();
+        productCreationDto.setName(product.getName());
+        productCreationDto.setPrice(product.getPrice());
+        productCreationDto.setProductStatus(product.getProductStatus());
+
+        return ResponseEntity.ok(productCreationDto);
     }
     @PreAuthorize("hasAuthority('UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity update(@PathVariable Long id,@RequestBody ProductUpdateDto product){
         Product updatedProduct = productService.update(id,product);
-        return ResponseEntity.ok(updatedProduct);
+        return ResponseEntity.ok(product);
     }
 }
 

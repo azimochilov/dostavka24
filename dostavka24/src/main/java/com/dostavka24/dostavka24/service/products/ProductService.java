@@ -22,22 +22,18 @@ public class ProductService {
     }
 
 
-    public Product create(ProductCreationDto product) {
+    public Product create(ProductCreationDto productDto) {
 
-        Product exsistsProduct = productRepository.findByName(product.getName());
-        if (exsistsProduct != null) {
-            exsistsProduct.setProductStatus(product.getProductStatus());
-            exsistsProduct.setPrice(product.getPrice());
-        }
+        Product existingProduct = new Product();
 
-        exsistsProduct = new Product();
-        exsistsProduct.setCreateAt(Instant.now());
-        exsistsProduct.setProductStatus(product.getProductStatus());
-        exsistsProduct.setName(product.getName());
-        exsistsProduct.setPrice(product.getPrice());
+            existingProduct.setName(productDto.getName());
+            existingProduct.setPrice(productDto.getPrice());
+            existingProduct.setProductStatus(productDto.getProductStatus());
+            existingProduct.setCreateAt(Instant.now());
 
-        return productRepository.save(exsistsProduct);
+        return productRepository.save(existingProduct);
     }
+
 
     public void delete(Long id) {
 
