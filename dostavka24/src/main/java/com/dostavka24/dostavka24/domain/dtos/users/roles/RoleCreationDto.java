@@ -12,4 +12,5 @@ import java.util.List;
 public class RoleCreationDto {
     private String name;
     private List<PrivilegeCreationDto> privileges;
+
 }

@@ -38,11 +38,8 @@ public class AddressService {
     }
 
     public Address update(Long id, AddressUpdateDto updtAddress) {
-
-        Address existingAddress = addressRepository.getById(id);
-        if (existingAddress == null) {
-            throw new NotFoundException("Address not found");
-        }
+        Address existingAddress = addressRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Address not found with id: " + id));
 
         existingAddress.setLongitude(updtAddress.getLongitude());
         existingAddress.setLatitude(updtAddress.getLatitude());
@@ -51,7 +48,6 @@ public class AddressService {
 
         return addressRepository.save(existingAddress);
     }
-
     public List<Address> getAll() {
 
         return addressRepository.findAll();
