@@ -16,7 +16,6 @@ import com.dostavka24.dostavka24.repository.RestaurantRepository;
 import com.dostavka24.dostavka24.service.addresses.AddressService;
 import com.dostavka24.dostavka24.service.commons.DistanceCalService;
 import com.dostavka24.dostavka24.service.restaurant.RestaurantService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,30 +67,25 @@ public class RestaurantServiceTest {
     @BeforeEach
     public void setUp(){
 
-        //Address
         address.setId(1L);
         address.setStreet("TestStreetTashkent");
         address.setCity("TestCityTashkent");
         address.setLatitude(1.0);
         address.setLongitude(1.0);
 
-        //Address Creation Dto
         addressCreationDto.setCity("TestCity");
         addressCreationDto.setLatitude(1.0);
         addressCreationDto.setLongitude(1.0);
         addressCreationDto.setStreet("TestStreet");
 
-        //Address Update Dto
         addressUpdateDto.setCity("TestUpdateCity");
         addressUpdateDto.setLatitude(3.0);
         addressUpdateDto.setLongitude(3.0);
         addressUpdateDto.setStreet("TestUpdateStreet");
 
-        //Role
         role.setId(1L);
         role.setName("ADMIN");
 
-        //User
         user.setId(1L);
         user.setEmail("azimochilov29");
         user.setFirstName("azim");
@@ -104,7 +98,6 @@ public class RestaurantServiceTest {
         user.setRegisteredAt(Instant.now());
         user.setRole(role);
 
-        //Order
         order.setId(1L);
         order.setCart(true);
         order.setAddress(address);
@@ -117,26 +110,20 @@ public class RestaurantServiceTest {
         order.setUpdatedAt(Instant.now());
         order.setUser(user);
 
-        //Restaurant
         restaurant.setId(1L);
         restaurant.setName("EVOS");
         restaurant.setAddress(address);
         restaurant.setOrders(orders);
 
-        //List Of Orders
         orders.add(order);
 
-        //Restaurant Creation Dto
         restaurantCreationDto.setAddress(addressCreationDto);
         restaurantCreationDto.setName("EVOS");
 
-        //Restaurant Update Dto
         restaurantUpdateDto.setAddress(addressUpdateDto);
         restaurantUpdateDto.setName("MAXWAY");
 
     }
-
-
 
     @Test
     public void createRestaurant_NewRestaurant_ShouldSaveRestaurant() {

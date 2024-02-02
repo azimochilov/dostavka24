@@ -2,7 +2,6 @@ package com.dostavka24.dostavka24.rests.restaurants;
 
 import com.dostavka24.dostavka24.domain.dtos.products.ProductCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.products.ProductUpdateDto;
-import com.dostavka24.dostavka24.domain.entities.restaurants.Restaurant;
 import com.dostavka24.dostavka24.domain.enums.ProductStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -46,12 +45,12 @@ public class ProductControllerIntegrationTest {
 
         productCreationDto = new ProductCreationDto();
         productCreationDto.setName("TEsasdasdasdt");
-        productCreationDto.setPrice(100); // Ensure this is a non-null value
+        productCreationDto.setPrice(100);
         productCreationDto.setProductStatus(ProductStatus.CHICKEN);
 
         productUpdateDto = new ProductUpdateDto();
         productUpdateDto.setName("Test Pasdroduct");
-        productUpdateDto.setPrice(101); // Ensure this is a non-null value
+        productUpdateDto.setPrice(101);
         productUpdateDto.setProductStatus(ProductStatus.BURGER);
     }
 

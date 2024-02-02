@@ -12,19 +12,17 @@ public class DistanceCalServiceTest {
 
     @Test
     public void calculateDistance_WithKnownCoordinates_ShouldReturnAccurateDistance() {
-        // Example: Coordinates for New York City and Los Angeles
+
         double nycLat = 40.7128;
         double nycLng = -74.0060;
         double laLat = 34.0522;
         double laLng = -118.2437;
 
-        // Known approximate distance between NYC and LA in km (about 3940 km)
         double expectedDistance = 3940;
 
         double calculatedDistance = distanceCalService.calculateDistance(nycLat, nycLng, laLat, laLng);
 
-        // Allow a small margin of error due to the complexity of geographical calculations
-        double marginOfError = 50; // 50 km margin of error
+        double marginOfError = 50;
 
         assertTrue(abs(calculatedDistance - expectedDistance) <= marginOfError,
                 "Calculated distance should be within " + marginOfError + " km of the expected distance");

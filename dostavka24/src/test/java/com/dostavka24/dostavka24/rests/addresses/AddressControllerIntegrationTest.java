@@ -60,15 +60,6 @@ public class AddressControllerIntegrationTest {
                 .expectStatus().isOk();
     }
 
-//    @Test
-//    @Order(2)
-//    @WithMockUser(username = "admin")
-//    void deleteAddress_ReturnStatusOk() {
-//        client.delete().uri("/address/1")
-//                .exchange()
-//                .expectStatus().isNoContent();
-//    }
-
     @Test
     @Order(3)
     @WithMockUser(username = "admin")

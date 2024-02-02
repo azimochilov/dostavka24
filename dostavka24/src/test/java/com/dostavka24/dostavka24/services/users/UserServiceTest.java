@@ -56,7 +56,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize mock data
+
         role = new Role();
         role.setId(1L);
         role.setName("USER");
@@ -140,18 +140,15 @@ public class UserServiceTest {
     }
     @Test
     public void shouldUpdateUserSuccessfully() {
-        // Set the address ID in userUpdateDto
+
         userUpdateDto.setAddressId(user.getAddress().getId());
 
-        // Stub the userRepository and addressService
         when(userRepository.getById(anyLong())).thenReturn(user);
         when(addressService.update(eq(user.getAddress().getId()), any(AddressUpdateDto.class))).thenReturn(address);
         when(userRepository.save(any())).thenReturn(user);
 
-        // Call the update method in UserService
         User updatedUser = userService.update(1L, userUpdateDto);
 
-        // Assertions and verifications
         assertNotNull(updatedUser);
         assertEquals(userUpdateDto.getUserName(), updatedUser.getUserName());
         verify(userRepository).save(any(User.class));

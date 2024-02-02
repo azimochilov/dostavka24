@@ -21,9 +21,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -60,7 +57,6 @@ public class OrderServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize User
         user = new User();
         user.setId(1L);
         user.setUserName("testUser");
@@ -77,7 +73,6 @@ public class OrderServiceTest {
                 .build();
 
 
-        // Initialize Address
         address = new Address();
         address.setId(1L);
         address.setStreet("123 Test Street");
@@ -85,7 +80,6 @@ public class OrderServiceTest {
         address.setLatitude(10.0);
         address.setLongitude(20.0);
 
-        // Initialize Order
         order = new Order();
         order.setId(1L);
         order.setUser(user);
@@ -94,20 +88,17 @@ public class OrderServiceTest {
         order.setCart(true);
         order.setPhone("1234567890");
         order.setTotalPrice(100.0);
-        order.setStatus(OrderStatus.ACCEPTED); // Assuming OrderStatus is an enum
+        order.setStatus(OrderStatus.ACCEPTED);
         order.setAmountOfProducts(5);
         order.setDeliveryTime("30 mins");
         order.setAddress(address);
-        // Assuming Restaurant is set separately or not needed for this test
 
-        // Initialize AddressCreationDto
         addressCreationDto = new AddressCreationDto();
         addressCreationDto.setStreet("123 Test Street");
         addressCreationDto.setCity("Test City");
         addressCreationDto.setLatitude(10.0);
         addressCreationDto.setLongitude(20.0);
 
-        // Initialize OrderCreationDto
         orderCreationDto = new OrderCreationDto();
         orderCreationDto.setAddress(addressCreationDto);
         orderCreationDto.setPhone("1234567890");
@@ -120,11 +111,9 @@ public class OrderServiceTest {
 
 
         try (MockedStatic<DeliveryCalService> mockedDeliveryCalService = Mockito.mockStatic(DeliveryCalService.class)) {
-            // Define behavior for the static method
             mockedDeliveryCalService.when(() -> DeliveryCalService.calculateEstimatedDeliveryTime(anyInt(), anyInt()))
                     .thenReturn("30 mins");
 
-            // Mock other interactions
             MockedStatic<SecurityUtils> utilities = Mockito.mockStatic(SecurityUtils.class);
             utilities.when(SecurityUtils::getCurrentUserId).thenReturn(1L);
             when(orderRepository.findAllByUserId(anyLong())).thenReturn(Collections.singletonList(order));
@@ -132,17 +121,14 @@ public class OrderServiceTest {
             when(addressService.create(any(AddressCreationDto.class))).thenReturn(address);
             when(orderDetailsProcessor.getProductsByOrderId(anyLong())).thenReturn(10);
 
-            // Call the method under test
             Order createdOrder = orderService.craeteOrder(orderCreationDto);
 
-            // Assertions
             assertNotNull(createdOrder);
             assertEquals(orderCreationDto.getPhone(), createdOrder.getPhone());
             assertEquals(10, createdOrder.getAmountOfProducts());
             assertEquals("30 mins", createdOrder.getDeliveryTime());
             verify(orderRepository).save(any(Order.class));
 
-            // Close the static mocks
             utilities.close();
         }
     }
@@ -150,7 +136,7 @@ public class OrderServiceTest {
 
     @Test
     void shouldReturnAllOrders() {
-        List<Order> orders = Arrays.asList(new Order(), new Order()); // Sample list of orders
+        List<Order> orders = Arrays.asList(new Order(), new Order());
         when(orderRepository.findAll()).thenReturn(orders);
 
         List<Order> retrievedOrders = orderService.getAllOrder();
@@ -163,8 +149,8 @@ public class OrderServiceTest {
     @Test
     void shouldReturnOrdersByStatus() {
 
-        List<Order> orders = Arrays.asList(new Order(), new Order()); // Sample list of orders
-        Boolean status = true; // Example status to filter by
+        List<Order> orders = Arrays.asList(new Order(), new Order());
+        Boolean status = true;
 
         when(orderRepository.findAllByIsCart(status)).thenReturn(orders);
 

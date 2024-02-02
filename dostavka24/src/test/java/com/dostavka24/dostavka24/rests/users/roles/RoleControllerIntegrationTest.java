@@ -76,14 +76,13 @@ public final class RoleControllerIntegrationTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(List.class); // You may need a custom response type here
+                .expectBody(List.class);
     }
 
     @Test
     @Order(4)
     @WithMockUser(username = "admin", authorities = "ROLE_PRIVILEGE_SERVICE")
     void getRoleById_ReturnStatusOk() {
-        // Assuming a role with ID 2 exists
         client.get().uri("/role/{id}", 8)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -96,7 +95,6 @@ public final class RoleControllerIntegrationTest {
     @Order(5)
     @WithMockUser(username = "admin", authorities = "ROLE_PRIVILEGE_SERVICE")
     void updateRole_ReturnStatusOk() {
-        // Assuming the RoleUpdateDto is similar to RoleCreationDto and role with ID 2 exists for update
         client.patch().uri("/role/{id}", 8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(roleCreationDto), RoleCreationDto.class)

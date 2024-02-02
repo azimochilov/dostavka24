@@ -29,7 +29,6 @@ public class OrderItemControllerIntegrationTest {
 
     WebTestClient client;
 
-    // Assuming OrderItemCreationDto is correctly implemented
     private OrderItemCreationDto orderItemCreationDto;
 
     @BeforeEach
@@ -39,11 +38,9 @@ public class OrderItemControllerIntegrationTest {
                 .baseUrl("http://localhost:8081")
                 .build();
 
-        // Setup product data here
         Product product = new Product();
         product.setName("Test Product");
         product.setPrice(100);
-        // Save product to the repository
 
         orderItemCreationDto = new OrderItemCreationDto();
         orderItemCreationDto.setName("Test Product");

@@ -40,7 +40,7 @@ public class PrivilegeControllerIntegrationTest {
                 .build();
 
         privilegeCreationDto = new PrivilegeCreationDto("READ_PRIVILEGE");
-        // Assuming PrivilegeCreationDto has a constructor that accepts a name
+
     }
 
     @Test
@@ -71,7 +71,6 @@ public class PrivilegeControllerIntegrationTest {
     @Order(3)
     @WithMockUser(username = "admin", authorities = "ROLE_PRIVILEGE_SERVICE")
     void getPrivilegeById_ReturnStatusOk() {
-        // Ensure there is a privilege with ID 1 in the database
         client.get().uri("/{id}", 1)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -84,7 +83,6 @@ public class PrivilegeControllerIntegrationTest {
     @Order(4)
     @WithMockUser(username = "admin", authorities = "ROLE_PRIVILEGE_SERVICE")
     void deletePrivilege_ReturnStatusOk() {
-        // Ensure there is a privilege with ID 1 that can be deleted
         client.delete().uri("/{id}", 1)
                 .exchange()
                 .expectStatus().isOk();

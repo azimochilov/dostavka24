@@ -32,7 +32,6 @@ public class PrivilegeServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Initializing mocks for different methods
         privilegeId = 1L;
         privilege = new Privilege();
         privilege.setId(privilegeId);
@@ -41,16 +40,12 @@ public class PrivilegeServiceTest {
         privilegeCreationDto = new PrivilegeCreationDto();
         privilegeCreationDto.setName("Test Privilege");
 
-        // Mocks for create method
         when(privilegeRepository.save(any(Privilege.class))).thenReturn(privilege);
 
-        // Mocks for getById method
         when(privilegeRepository.findById(privilegeId)).thenReturn(Optional.of(privilege));
 
-        // Mocks for getAll method
         when(privilegeRepository.findAll()).thenReturn(Collections.singletonList(privilege));
 
-        // Additional mocks for update and delete methods can be added here
     }
 
     @Test

@@ -3,7 +3,6 @@ package com.dostavka24.dostavka24.services.products;
 
 import com.dostavka24.dostavka24.domain.dtos.products.ProductCreationDto;
 import com.dostavka24.dostavka24.domain.dtos.products.ProductUpdateDto;
-import com.dostavka24.dostavka24.domain.entities.addresses.Address;
 import com.dostavka24.dostavka24.domain.entities.restaurants.Product;
 import com.dostavka24.dostavka24.domain.enums.ProductStatus;
 import com.dostavka24.dostavka24.repository.ProductRepository;
@@ -39,24 +38,20 @@ public class ProductServiceTest {
     @BeforeEach
     public void setUp(){
 
-        //Creation dto
         productCreationDto.setName("Test");
         productCreationDto.setProductStatus(ProductStatus.BURGER);
         productCreationDto.setPrice(654);
 
-        //Update dto
         productUpdateDto.setName("TestUpdt");
         productUpdateDto.setProductStatus(ProductStatus.APPETIZER);
         productUpdateDto.setPrice(777);
 
-        //Product
         product.setId(1L);
         product.setName("TestTest");
         product.setProductStatus(ProductStatus.CHICKEN);
         product.setPrice(2602);
         product.setCreateAt(Instant.now());
 
-        //List Products
         products.add(product);
 
     }

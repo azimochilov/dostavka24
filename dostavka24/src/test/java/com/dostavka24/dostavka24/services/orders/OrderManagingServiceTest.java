@@ -28,12 +28,10 @@ public class OrderManagingServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Creating a mock Order object
         mockOrder = new Order();
         mockOrder.setId(1L);
-        mockOrder.setCart(true); // Order initially in the cart
-        mockOrder.setStatus(OrderStatus.ACCEPTED); // Initial status
-        // ... Other initial settings for mockOrder
+        mockOrder.setCart(true);
+        mockOrder.setStatus(OrderStatus.ACCEPTED);
     }
 
     @Test
@@ -79,8 +77,6 @@ public class OrderManagingServiceTest {
 
         assertEquals(OrderStatus.DELIVERED, mockOrder.getStatus());
         assertFalse(mockOrder.getCart());
-
-        // Expect two invocations of save: one for updating the existing order and one for creating a new order
         verify(orderRepository, times(2)).save(any(Order.class));
     }
 

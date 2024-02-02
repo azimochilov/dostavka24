@@ -26,7 +26,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class RoleServiceTest {
 
-    // Mock repositories and RoleService injected with mocks
     @Mock
     private RoleRepository roleRepository;
     @Mock
@@ -34,7 +33,6 @@ public class RoleServiceTest {
     @InjectMocks
     private RoleService roleService;
 
-    // Test data
     private Role testRole;
     private Privilege testPrivilege;
     private RoleCreationDto roleCreationDto;
@@ -42,7 +40,6 @@ public class RoleServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // Initialize Role and Privilege entities
         testRole = new Role();
         testRole.setId(1L);
         testRole.setName("Admin");
@@ -51,7 +48,6 @@ public class RoleServiceTest {
         testPrivilege.setId(1L);
         testPrivilege.setName("READ_PRIVILEGE");
 
-        // Initialize DTOs for Role and Privilege
         privilegeCreationDto = new PrivilegeCreationDto();
         privilegeCreationDto.setName("READ_PRIVILEGE");
 
@@ -78,7 +74,6 @@ public class RoleServiceTest {
         assertThrows(NotFoundException.class, () -> roleService.getByName("Unknown"));
     }
 
-    // Test getById method
     @Test
     void whenGetById_thenReturnRole() {
         when(roleRepository.findById(1L)).thenReturn(Optional.of(testRole));
@@ -96,7 +91,6 @@ public class RoleServiceTest {
         assertThrows(NotFoundException.class, () -> roleService.getById(2L));
     }
 
-    // Test getAll method
     @Test
     void whenGetAll_thenReturnRoleList() {
         when(roleRepository.findAll()).thenReturn(Collections.singletonList(testRole));
@@ -108,7 +102,6 @@ public class RoleServiceTest {
         assertEquals("Admin", roles.get(0).getName());
     }
 
-    // Test update method
     @Test
     void whenUpdate_thenReturnUpdatedRole() {
         when(roleRepository.findById(1L)).thenReturn(Optional.of(testRole));
@@ -126,7 +119,6 @@ public class RoleServiceTest {
         assertThrows(NotFoundException.class, () -> roleService.update(3L, roleCreationDto));
     }
 
-    // Test create method
     @Test
     void whenCreate_thenReturnNewRole() {
         when(privilegeRepository.findByName("READ_PRIVILEGE")).thenReturn(Optional.of(testPrivilege));
@@ -146,7 +138,6 @@ public class RoleServiceTest {
         assertThrows(NotFoundException.class, () -> roleService.create(roleCreationDto));
     }
 
-    // Test delete method
     @Test
     void whenDelete_thenSuccess() {
         doNothing().when(roleRepository).deleteById(1L);

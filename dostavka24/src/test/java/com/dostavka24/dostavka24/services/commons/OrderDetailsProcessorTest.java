@@ -34,7 +34,6 @@ public class OrderDetailsProcessorTest {
 
     @BeforeEach
     public void setUp() {
-        // Setting up mock orders and items
         order1 = new Order();
         order1.setId(1L);
 
@@ -56,12 +55,11 @@ public class OrderDetailsProcessorTest {
 
     @Test
     public void getProductsByOrderId_WithValidOrderId_ShouldReturnCorrectCount() {
-        // Mocking the behavior of orderItemRepository
         when(orderItemRepository.findAll()).thenReturn(Arrays.asList(item1, item2, item3));
 
         Integer count = orderDetailsProcessor.getProductsByOrderId(1L);
 
-        assertEquals(5, count); // 3 from item1 and 2 from item2
+        assertEquals(5, count);
     }
 
     @Test
@@ -70,6 +68,6 @@ public class OrderDetailsProcessorTest {
 
         Integer count = orderDetailsProcessor.getCountOfProducts(orderItems);
 
-        assertEquals(5, count); // 3 from item1 and 2 from item2
+        assertEquals(5, count);
     }
 }

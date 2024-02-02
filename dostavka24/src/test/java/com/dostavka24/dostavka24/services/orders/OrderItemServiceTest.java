@@ -48,7 +48,6 @@ public class OrderItemServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Mock Order and Product setup
         mockOrder = new Order();
         mockOrder.setId(1L);
         mockOrder.setCart(true);
